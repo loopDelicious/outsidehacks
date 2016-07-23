@@ -1,3 +1,1 @@
-env/
-.pyc
-*secrets*
+node_modules
