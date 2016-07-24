@@ -9,9 +9,14 @@ var OL = {
             this.updateLocation();
         }.bind(this));
 
-        // listen for bg color events
+        // listen for background color events
         this.socket.on('background color', function (color) {
             $('body').css({backgroundColor: color});
+        });
+
+        // listen client-list events
+        this.socket.on('clients', function (clientList) {
+            $('#client-list').text(JSON.stringify(clientList, null, 4));
         });
 
         // set up admin functions
@@ -19,9 +24,14 @@ var OL = {
             $('#admin').on("submit", function (e) {
                 e.preventDefault();
                 var color = $('#color-input').val();
-                socket.emit('admin-color', color);
-            })
-        });
+                this.socket.emit('admin-color', color);
+            }.bind(this));
+            $('#get-clients').on("submit", function (e) {
+                e.preventDefault();
+                this.socket.emit('client-list');
+            }.bind(this));
+
+        }.bind(this));
     },
 
     updateLocation: function(){
