@@ -1,10 +1,13 @@
 <!doctype html>
 <html>
   <head>
+
     <title>Outside Hacks</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/app.js"></script>
+    <link href="/static/index.css" />
+
   </head>
 
   <body>
@@ -14,6 +17,13 @@
         <input type='text' id='color-input' />
         <button id='submit' />
       </form>
+   
+<!--       <input type="file" accept="image/*" capture="camcorder">
+      <button id='camera' /> -->
+
+      <video id="video" width="640" height="480" autoplay></video>
+      <button id="snap">Snap Photo</button>
+      <canvas id="canvas" width="640" height="480"></canvas>
 
   </body>
 </html>
