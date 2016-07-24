@@ -3,6 +3,9 @@ var io = require ('socket.io-client');
 var React = require ('react');
 var ReactDOM = require ('react-dom');
 var People = require('./people.jsx');
+var startTime;
+var latency;
+var toDelay;
 
 // set up main OutsideLights js object
 var OL = {
@@ -45,8 +48,11 @@ var OL = {
             }
         }.bind(this));
 
+        //adjust for user latency upon distance update
         this.socket.on('distance-update', function (distance) {
             $('#distance').text(distance);
+            latency = Date.now() - startTime;
+            toDelay = latency / 2;
         });
 
                 // listen client-list events
@@ -192,7 +198,9 @@ var OL = {
                 lat: data.coords.latitude,
                 lng: data.coords.latitude
             };
+
             this.socket.emit('location-update', this.coords);
+            this.startTime = Date.now();
             this.renderPeople();
             setTimeout(this.updateLocation.bind(this), 3000); // update location every 3s
         }.bind(this), function(error){
