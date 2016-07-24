@@ -31,8 +31,10 @@ var OL = {
                 lng: data.coords.latitude
             });
             setTimeout(this.updateLocation.bind(this), 3000); // update location every 3s
-        }.bind(this), function(){
-            alert('This app requires location access to work. Please update your browser settings and enable location for this page.');
+        }.bind(this), function(error){
+            if (error.code === PositionError.PERMISSION_DENIED) {
+                alert('This app requires location access to work. Please update your browser settings and enable location for this page.');
+            }
         }, {
             enableHighAccuracy: true
         });
