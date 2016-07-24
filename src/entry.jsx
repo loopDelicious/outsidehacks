@@ -3,7 +3,6 @@ var io = require ('socket.io-client');
 var React = require ('react');
 var ReactDOM = require ('react-dom');
 var People = require('./people.jsx');
-var ctx = document.getElementById('canvas').getContext('2d');
 
 // set up main OutsideLights js object
 var OL = {
@@ -110,21 +109,6 @@ var OL = {
         this.socket.on('chat-message', function(msg) {
             console.log('message: ' + msg);
             $('#messages').append($('<li>').text(msg));
-        });
-
-        // client to server chat image
-        $('#image').submit(function(e) {
-            e.preventDefault();
-            this.socket.emit('chat-image', $)
-        })
-
-        this.socket.on("image", function(info) {
-            if (info.image) {
-                console.log("image: from client");
-                var img = new Image();
-                img.src = 'data:image/jpeg;base64,' + info.buffer;
-                ctx.drawImage(img, 0, 0);
-            }
         });
 
         // set up admin functions

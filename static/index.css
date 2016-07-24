@@ -4,6 +4,11 @@ html, body {
     font-family: Helvetica, Arial, sans-serif;
 }
 
+h1 {
+    font-size: 18px;
+    margin: 5px;
+}
+
 #flash {
     padding: 20px;
     height: 100%;
@@ -17,6 +22,7 @@ html, body {
     position: absolute;
     color: white;
     padding: 20px;
+    margin: 10px;
     font: 13px Helvetica, Arial;
 }
 
@@ -115,6 +121,7 @@ form {
     position: fixed;
     bottom: 0;
     width: 100%;
+    margin: 15px auto;
 }
 
 form input {
@@ -142,5 +149,5 @@ form button {
 }
 
 #messages li:nth-child(odd) {
-    background: #eee;
+    background: rgba(120, 120, 120, 0.5);
 }

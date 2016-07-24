@@ -12,7 +12,6 @@ var djCoords = {
     lng: 0
 };
 var speed = 0;
-var fs = require('fs');
 
 app.use(express.static('static'));
 
@@ -57,14 +56,6 @@ io.on('connection', function (client) {
     client.on('background-color', function(){
         client.emit('background-color', {
             color: bgcolor
-        });
-    });
-
-    // broadcast pics to everyone
-    fs.readFile('image.png', function(err, buf) {
-        io.emit('image', {
-            image: true,
-            buffer: buf
         });
     });
 
