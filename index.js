@@ -45,8 +45,11 @@ io.on('connection', function (client) {
         client.emit('distance-update', distance);
     });
 
-    client.on('chat-message', function(msg) {
-        console.log('message: ' + msg);
+
+
+    // broadcast message to everyone including sender
+    client.on('chat-message', function(msg){
+        io.emit('chat-message', msg);
     });
 
     client.on('bpm', function(){
