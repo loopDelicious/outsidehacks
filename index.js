@@ -124,7 +124,6 @@ io.on('connection', function (client) {
                 {latitude: djCoords.lat, longitude: djCoords.lng}
             );
             // emit to a specific client id
-
             io.sockets.connected[key].emit('background-color', {
                 color: color,
                 distance: distance,
