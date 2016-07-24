@@ -7,6 +7,7 @@ var clients = {}; //
 var bpm = 100;
 var opacity = 0;
 var bgcolor = 'black';
+var speed = 10;
 var djCoords = {
     lat: 0,
     lng: 0
