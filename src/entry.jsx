@@ -80,6 +80,19 @@ var OL = {
             $("#slider_val").val(bpm);
         }.bind(this));
 
+        // client to server chat message
+        $('#chat').submit(function(e){
+            e.preventDefault();
+            this.socket.emit('chat-message', $('#m').val());
+            $('#m').val('');
+            return false;
+        }.bind(this));
+
+        // send out
+        this.socket.on('chat-message', function(msg){
+            io.emit('chat-message', msg);
+        });
+
         // set up admin functions
         $(document).ready(function () {
             var self = this;
