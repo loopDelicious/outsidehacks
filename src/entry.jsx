@@ -3,7 +3,6 @@ var io = require ('socket.io-client');
 var React = require ('react');
 var ReactDOM = require ('react-dom');
 var People = require('./people.jsx');
-var ctx = document.getElementById('canvas').getContext('2d');
 
 // set up main OutsideLights js object
 var OL = {
@@ -126,7 +125,6 @@ var OL = {
                 console.log("image: from client");
                 var img = new Image();
                 img.src = 'data:image/jpeg;base64,' + info.buffer;
-                ctx.drawImage(img, 0, 0);
             }
         });
 

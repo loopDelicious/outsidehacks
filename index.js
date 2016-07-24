@@ -11,7 +11,7 @@ var djCoords = {
     lat: 0,
     lng: 0
 };
-var speed = 0;
+var speed = 10;
 var fs = require('fs');
 
 app.use(express.static('static'));
