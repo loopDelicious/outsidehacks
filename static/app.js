@@ -26,11 +26,12 @@ var OL = {
 
         // set up admin functions
         $(document).ready(function () {
-            $('#admin').on("submit", function (e) {
+            var self = this;
+            $('#color-picker td').on("click", function (e) {
                 e.preventDefault();
-                var color = $('#color-input').val();
-                this.socket.emit('admin-color', color);
-            }.bind(this));
+                var color = $(this).attr('bgcolor');
+                self.socket.emit('admin-color', color);
+            });
             $('#get-clients').on("submit", function (e) {
                 e.preventDefault();
                 this.socket.emit('client-list');
