@@ -1,3 +1,4 @@
 # setup
 `npm install -g nodemon`
-'webpack -d --watch'
+
+`webpack -d --watch`
