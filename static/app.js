@@ -1,7 +1,7 @@
 var socket = io();
 
 socket.on('background color', function (color) {
-    $(body).css({backgroundColor: color});
+    $('body').css({backgroundColor: color});
 });
 
 socket.on('connect', function(){
