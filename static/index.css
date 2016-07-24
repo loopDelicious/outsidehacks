@@ -102,6 +102,27 @@ body {
     animation: example infinite;
 }
 
+#people {
+    width: 600px;
+    height: 600px;
+    position: relative;
+    border: 20px solid rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+}
+
+.person {
+    position: absolute;
+    height: 10px;
+    width: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 5px 5px rgba(0,0,0,0.3);
+}
+
+
+
+
+
+
  /* for chat messaging */
  * {
      margin: 0;

@@ -5,7 +5,7 @@ var io = require('socket.io')(http);
 var geolib = require('geolib');
 var clients = {}; //
 var bpm = 100;
-var opacity = 1;
+var opacity = 0;
 var bgcolor = 'black';
 var djCoords = {
     lat: 0,
@@ -34,14 +34,15 @@ io.on('connection', function (client) {
         // if user in clients, push location
         // otherwise create new client and push location
 
-        clients[client.id] = {
-            'coords': latlng
-        };
-
         distance = geolib.getDistance(
             {latitude: latlng.lat, longitude: latlng.lng},
             {latitude: djCoords.lat, longitude: djCoords.lng}
         );
+
+        clients[client.id] = {
+            coords: latlng,
+            distance: distance
+        };
 
         client.emit('distance-update', distance);
     });
@@ -86,6 +87,18 @@ io.on('connection', function (client) {
         io.emit('speed', speed);
     });
 
+
+    client.on('get-people', function(){
+        for (var key in clients) {
+            if (!clients.hasOwnProperty(key)) continue;
+            if (!io.sockets.connected[key]) {
+                delete clients[key];
+                continue;
+            }
+        }
+
+        client.emit('people', clients);
+    });
 
 
 

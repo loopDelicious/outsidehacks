@@ -9,7 +9,11 @@ var OL = {
     init: function(){
         this.socket = io();
         this.opacity = 0;
-        this.speed = 100;
+        this.coords = {
+            lat: 0,
+            lng: 0
+        };
+        this.speed = 10;
         this.$flash = $('#flash');
         this.$body = $('body');
 
@@ -22,10 +26,7 @@ var OL = {
             this.socket.emit('speed'); //request a speed update
             this.socket.emit('background-color'); //request an opacity update
 
-            var peopleProps = {
-                socket: this.socket
-            };
-            ReactDOM.render(<People {...peopleProps} />, $('.people')[0]);
+            this.renderPeople();
         }.bind(this));
 
         // listen for background-color events
@@ -71,6 +72,7 @@ var OL = {
 
         this.socket.on('speed', function(speed) {
             this.speed = speed;
+            this.renderPeople();
 
             if (!window.isAdmin) {
                 return;
@@ -78,6 +80,7 @@ var OL = {
 
             $("#speed_slider").val(speed);
             $("#speed_val").text(speed);
+
         }.bind(this));
 
         this.socket.on('bpm', function(bpm) {
@@ -160,6 +163,19 @@ var OL = {
         }.bind(this));
     },
 
+    renderPeople(){
+        if (!window.isAdmin) {
+            return false;
+        }
+
+        var peopleProps = {
+            socket: this.socket,
+            speed: this.speed,
+            coords: this.coords
+        };
+        ReactDOM.render(<People {...peopleProps} />, $('#people')[0]);
+    },
+
     flash(){
         var msDelay = (((1 / (this.bpm / 60)) / 2 ) * 1000);
         console.log(msDelay);
@@ -172,10 +188,12 @@ var OL = {
 
     updateLocation: function(){
         navigator.geolocation.getCurrentPosition(function (data) {
-            this.socket.emit('location-update', {
+            this.coords = {
                 lat: data.coords.latitude,
                 lng: data.coords.latitude
-            });
+            };
+            this.socket.emit('location-update', this.coords);
+            this.renderPeople();
             setTimeout(this.updateLocation.bind(this), 3000); // update location every 3s
         }.bind(this), function(error){
             if (error.code === 1) { // 1 == PositionError.PERMISSION_DENIED
