@@ -71,9 +71,10 @@
 	            ReactDOM.render(React.createElement(People, peopleProps), $('.people')[0]);
 	        }.bind(this));
 	
-	        // listen for background color events
-	        this.socket.on('background color', function (color) {
-	            $('body').css({ backgroundColor: color });
+	        // listen for background-color events
+	        this.socket.on('background-color', function (data) {
+	            $('#distance').text(data.distance);
+	            $('body').css({ backgroundColor: data.color });
 	        });
 	
 	        // listen client-list events

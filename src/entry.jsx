@@ -20,9 +20,10 @@ var OL = {
             ReactDOM.render(<People {...peopleProps} />, $('.people')[0]);
         }.bind(this));
 
-        // listen for background color events
-        this.socket.on('background color', function (color) {
-            $('body').css({backgroundColor: color});
+        // listen for background-color events
+        this.socket.on('background-color', function (data) {
+            $('#distance').text(data.distance);
+            $('body').css({backgroundColor: data.color});
         });
 
         // listen client-list events
@@ -33,7 +34,7 @@ var OL = {
         // listen for refresh request
         this.socket.on('refresh', function() {
             window.location.reload();
-        })
+        });
 
         // set up admin functions
         $(document).ready(function () {

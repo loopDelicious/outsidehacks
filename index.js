@@ -59,7 +59,7 @@ io.on('connection', function (client) {
             );
             // emit to a specific client id
 
-            io.sockets.connected[key].emit('background color', {
+            io.sockets.connected[key].emit('background-color', {
                 color: color,
                 distance: distance,
             });
