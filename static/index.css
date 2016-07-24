@@ -5,7 +5,7 @@ html, body {
 }
 
 body {
-    transition: 500ms background-color;
+    /*transition: 500ms background-color;*/
     padding: 20px;
 }
 
@@ -33,12 +33,55 @@ body {
 }
 
 #color-picker {
-    border: 20px solid rgba(0, 0, 0, 0.3);
     float: left;
-    border-radius: 15px
 }
 
 #client-container {
     clear: both;
     margin-top: 20px;
+}
+
+#bpm {
+    padding: 20px;
+    float: left;
+    margin-left: 20px;
+    text-align: center;
+}
+
+#bpm #slider_val {
+    width: 100px;
+    padding:12px;
+    margin-bottom:25px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    background: rgba(255,255,255,0.3);
+    text-align: center;
+    font-size:30px;
+    font-weight:bold;
+}
+
+#bpm #slider {
+    width: 300px
+}
+
+#bpm h1 {
+    font-weight:bold;
+    font-size:30px;
+    margin-bottom:20px;
+}
+
+.control-element {
+    background: rgba(100,100,100,0.5);
+    border: 20px solid rgba(0, 0, 0, 0.3);
+    border-radius: 15px
+}
+
+@keyframes example {
+    0%   {background-color: black;}
+    50%  {background-color: gray;}
+    100% {background-color: black;}
+}
+
+body {
+    animation: example infinite;
 }

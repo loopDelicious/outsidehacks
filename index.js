@@ -4,6 +4,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var geolib = require('geolib');
 var clients = {}; //
+var bpm = 100;
 
 app.use(express.static('static'));
 
@@ -31,10 +32,18 @@ io.on('connection', function (client) {
             clients[client.id] = {
                 'coords': latlng,
                 'first_appeared': Date.now(),
-            }
+            };
         // }
     });
 
+    client.on('bpm', function(){
+        client.emit('bpm', bpm);
+    });
+
+    client.on('admin-bpm', function(newBpm){
+        bpm = newBpm;
+        io.emit('bpm', bpm);
+    });
 
 
     // display logic:

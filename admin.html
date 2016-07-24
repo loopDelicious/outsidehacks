@@ -5,13 +5,14 @@
     <title>Outside Hacks</title>
     <link rel="stylesheet" href="/reset.css"/>
     <link rel="stylesheet" href="/index.css"/>
+    <meta name="viewport" content="width=700, initial-scale=1.0">
 
 </head>
 
 <body>
     <h1 id="connect-msg">Connecting...</h1>
 
-    <div id='color-picker'>
+    <div id='color-picker' class="control-element">
         <table>
             <tr>
                 <td bgcolor="#aaff01">BrightGreen</td>
@@ -24,6 +25,12 @@
                 <td bgcolor="black">Black</td>
             </tr>
         </table>
+    </div>
+
+    <div id="bpm" class="control-element">
+        <h1>BPM</h1>
+        <input id="slider_val" value="100"><br>
+        <input id="slider" type="range" min="60" max="200" step="5" />
     </div>
 
     <div id="client-container">
@@ -40,6 +47,9 @@
 
     <div class="people"></div>
 
+    <script>
+        isAdmin = true;
+    </script>
     <script src="/bundle.js"></script>
 </body>
 </html>
