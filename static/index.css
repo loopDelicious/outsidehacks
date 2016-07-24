@@ -53,7 +53,8 @@ html, body {
 }
 
 #bpm #slider_val,
-#opacity #opacity_val{
+#opacity #opacity_val,
+#speed #speed_val {
     width: 100px;
     padding:12px;
     margin-bottom:25px;
@@ -67,7 +68,8 @@ html, body {
 }
 
 #bpm #slider,
-#opacity #opacity_slider{
+#opacity #opacity_slider,
+#speed #speed_slider {
     width: 300px
 }
 

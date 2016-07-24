@@ -60,6 +60,7 @@
 	    init: function init() {
 	        this.socket = io();
 	        this.opacity = 0;
+	        this.speed = 100;
 	        this.$flash = $('#flash');
 	        this.$body = $('body');
 	
@@ -69,6 +70,7 @@
 	            this.updateLocation();
 	            this.socket.emit('bpm'); //request a beats per minute update
 	            this.socket.emit('opacity'); //request an opacity update
+	            this.socket.emit('speed'); //request a speed update
 	            this.socket.emit('background-color'); //request an opacity update
 	
 	            var peopleProps = {
@@ -80,12 +82,18 @@
 	        // listen for background-color events
 	        this.socket.on('background-color', function (data) {
 	            $('#distance').text(data.distance);
-	            this.bgcolor = data.color;
-	            this.$body.css({ backgroundColor: this.bgcolor });
+	            window.setTimeout(function () {
+	                this.bgcolor = data.color;
+	                this.$body.css({ backgroundColor: this.bgcolor });
+	            }.bind(this), data.distance * 100);
 	            if (window.isAdmin) {
 	                this.$body.css({ backgroundColor: this.bgcolor });
 	            }
 	        }.bind(this));
+	
+	        this.socket.on('distance-update', function (distance) {
+	            $('#distance').text(distance);
+	        });
 	
 	        // listen client-list events
 	        this.socket.on('clients', function (clientList) {
@@ -106,6 +114,17 @@
 	
 	            $("#opacity_slider").val(Math.ceil(opacity * 100));
 	            $("#opacity_val").text(Math.ceil(opacity * 100));
+	        }.bind(this));
+	
+	        this.socket.on('speed', function (speed) {
+	            this.speed = speed;
+	
+	            if (!window.isAdmin) {
+	                return;
+	            }
+	
+	            $("#speed_slider").val(Math.ceil(speed * 100));
+	            $("#speed_val").text(Math.ceil(speed * 100));
 	        }.bind(this));
 	
 	        this.socket.on('bpm', function (bpm) {
@@ -163,6 +182,12 @@
 	                $("#opacity_val").text(this.value);
 	                //console.log('changing opacity to ', this.value);
 	                self.socket.emit('admin-opacity', this.value / 100);
+	            });
+	
+	            $("#speed_slider").on("input", function () {
+	                $("#speed_val").text(this.value);
+	                //console.log('changing speed to ', this.value);
+	                self.socket.emit('admin-speed', this.value / 100);
 	            });
 	
 	            $("#slider").on("input", function () {

@@ -43,6 +43,12 @@
             <input id="opacity_slider" type="range" min="0" max="100" step="5" />
         </div>
 
+        <div id="speed" class="control-element slider-control">
+            <h1>Speed</h1>
+            <div id="speed_val">100</div><br/>
+            <input id="speed_slider" type="range" min="0" max="100" step="5" />
+        </div>
+
         <div id="client-container">
             <form id='get-clients'>
                 <button id='clients'>Get Clients</button>
@@ -51,9 +57,14 @@
             </form>
         </div>
 
-        <form id='refresh-form'>
-            <button id='refresh'>Refresh</button>
-        </form>
+            <ul id="messages"></ul>
+            <form action="" id="chat">
+                <input id="m" autocomplete="off" /><button>Send</button>
+            </form>
+
+            <form id='refresh-form'>
+                <button id='refresh'>Refresh</button>
+            </form>
 
         <div class="people"></div>
 
