@@ -59,12 +59,17 @@
 	var OL = {
 	    init: function init() {
 	        this.socket = io();
+	        this.opacity = 0;
+	        this.$flash = $('#flash');
+	        this.$body = $('body');
 	
 	        // update connection msg and start location loop
 	        this.socket.on('connect', function () {
 	            $('#connect-msg').hide();
 	            this.updateLocation();
 	            this.socket.emit('bpm'); //request a beats per minute update
+	            this.socket.emit('opacity'); //request an opacity update
+	            this.socket.emit('background-color'); //request an opacity update
 	
 	            var peopleProps = {
 	                socket: this.socket
@@ -75,7 +80,11 @@
 	        // listen for background-color events
 	        this.socket.on('background-color', function (data) {
 	            $('#distance').text(data.distance);
-	            this.updateBgColor(data.color);
+	            this.bgcolor = data.color;
+	            this.$body.css({ backgroundColor: this.bgcolor });
+	            if (window.isAdmin) {
+	                this.$body.css({ backgroundColor: this.bgcolor });
+	            }
 	        }.bind(this));
 	
 	        // listen client-list events
@@ -88,12 +97,25 @@
 	            window.location.reload();
 	        });
 	
+	        this.socket.on('opacity', function (opacity) {
+	            this.opacity = opacity;
+	
+	            if (!window.isAdmin) {
+	                return;
+	            }
+	
+	            $("#opacity_slider").val(Math.ceil(opacity * 100));
+	            $("#opacity_val").text(Math.ceil(opacity * 100));
+	        }.bind(this));
+	
 	        this.socket.on('bpm', function (bpm) {
 	            this.bpm = bpm;
 	
-	            $('body').css({ animationDuration: 1 / (bpm / 60) + 's' });
+	            if (!window.isAdmin) {
+	                this.flash();
+	            }
 	
-	            console.log('new bpm ' + bpm);
+	            //console.log('new bpm ' + bpm);
 	
 	            if (!window.isAdmin) {
 	                return;
@@ -136,19 +158,36 @@
 	                this.socket.emit('refresh');
 	            }.bind(this));
 	
+	            $("#opacity_slider").on("input", function () {
+	                $("#opacity_val").text(this.value);
+	                //console.log('changing opacity to ', this.value);
+	                self.socket.emit('admin-opacity', this.value / 100);
+	            });
+	
 	            $("#slider").on("input", function () {
 	                $("#slider_val").val(this.value);
-	                console.log('changing bpm to ', this.value);
+	                //console.log('changing bpm to ', this.value);
 	                self.socket.emit('admin-bpm', this.value);
 	            });
 	
 	            $("#slider_val").on('keyup', function () {
 	                $("#slider").val(this.value);
-	                console.log('changing bpm to ', this.value);
+	                //console.log('changing bpm to ', this.value);
 	                self.socket.emit('admin-bpm', this.value);
 	            });
 	        }.bind(this));
 	    },
+	
+	    flash: function flash() {
+	        var msDelay = 1 / (this.bpm / 60) / 2 * 1000;
+	        console.log(msDelay);
+	        this.$flash.stop().animate({ opacity: 0 }, msDelay, 'swing', function () {
+	            this.$flash.animate({ opacity: this.opacity }, msDelay, 'swing', function () {
+	                this.flash();
+	            }.bind(this));
+	        }.bind(this));
+	    },
+	
 	
 	    updateLocation: function updateLocation() {
 	        navigator.geolocation.getCurrentPosition(function (data) {
@@ -165,32 +204,6 @@
 	        }, {
 	            enableHighAccuracy: true
 	        });
-	    },
-	
-	    updateBgColor: function updateBgColor(color) {
-	        var stylesheet = document.styleSheets[1] // replace 0 with the number of the stylesheet that you want to modify
-	        ,
-	            rules = stylesheet.rules,
-	            i = rules.length,
-	            keyframes,
-	            keyframe;
-	
-	        while (i--) {
-	            keyframes = rules.item(i);
-	            var type = keyframes.type;
-	            if ((keyframes.type === keyframes.KEYFRAMES_RULE || keyframes.type === keyframes.WEBKIT_KEYFRAMES_RULE) && keyframes.name === "example") {
-	                rules = keyframes.cssRules;
-	                i = rules.length;
-	                while (i--) {
-	                    keyframe = rules.item(i);
-	                    if ((keyframe.type === keyframe.KEYFRAME_RULE || keyframe.type === keyframe.WEBKIT_KEYFRAME_RULE) && keyframe.keyText === "50%") {
-	                        keyframe.style.backgroundColor = color;
-	                        break;
-	                    }
-	                }
-	                break;
-	            }
-	        }
 	    }
 	};
 	

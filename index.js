@@ -5,6 +5,8 @@ var io = require('socket.io')(http);
 var geolib = require('geolib');
 var clients = {}; //
 var bpm = 100;
+var opacity = 1;
+var bgcolor = 'black';
 
 app.use(express.static('static'));
 
@@ -44,14 +46,31 @@ io.on('connection', function (client) {
         client.emit('bpm', bpm);
     });
 
+    client.on('background-color', function(){
+        client.emit('background-color', {
+            color: bgcolor
+        });
+    });
+
+    client.on('opacity', function(){
+        client.emit('opacity', opacity);
+    });
+
     client.on('admin-bpm', function(newBpm){
         bpm = newBpm;
         io.emit('bpm', bpm);
     });
 
+    client.on('admin-opacity', function(newOpacity){
+        opacity = newOpacity;
+        io.emit('opacity', opacity);
+    });
+
 
     // display logic:
     client.on('admin-color', function (color) {
+        bgcolor = color;
+
         if (!clients[client.id]) {
             return;
         }
