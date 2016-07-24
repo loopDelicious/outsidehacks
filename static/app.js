@@ -4,8 +4,8 @@ socket.on('background color', function (color) {
     $(body).css({backgroundColor: color});
 });
 
-io.on('connection', function(){
-    $('connect-msg').text('connected');
+socket.on('connect', function(){
+    $('#connect-msg').text('Connected!');
 });
 
 $(document).ready(function () {
