@@ -82,9 +82,10 @@ var OL = {
             return false;
         }.bind(this));
 
-        // send out
-        this.socket.on('chat-message', function(msg){
-            io.emit('chat-message', msg);
+        // client chat and broadcast
+        this.socket.on('chat-message', function(msg) {
+            console.log('message: ' + msg);
+            $('#messages').append($('<li>').text(msg));
         });
 
         // set up admin functions
