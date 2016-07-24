@@ -29,10 +29,14 @@ var OL = {
         // listen for background-color events
         this.socket.on('background-color', function (data) {
             $('#distance').text(data.distance);
-            window.setTimeout(function(){
+
+            this.colorTimeout && window.clearTimeout(this.colorTimeout);
+
+            this.colorTimeout = window.setTimeout(function(){
                 this.bgcolor = data.color;
                 this.$body.css({backgroundColor: this.bgcolor});
             }.bind(this), data.distance * 100);
+
             if (window.isAdmin) {
                 this.$body.css({backgroundColor: this.bgcolor});
             }
