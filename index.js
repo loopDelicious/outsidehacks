@@ -22,14 +22,14 @@ io.on('connection', function (client) {
     client.on('location-update', function(latlng){
         // if user in clients, push location
         // otherwise create new client and push location
-        if (typeof(clients[client.id]) == "object") {
-            client[client.id].coords = latlng;
-        } else {
+        // if (typeof(clients[client.id]) == "object") {
+        //     client[client.id].coords = latlng;
+        // } else {
             clients[client.id] = {
                 'coords': latlng,
                 'first_appeared': Date.now(),
             }
-        }
+        // }
     });
     // display logic:
 
@@ -37,7 +37,7 @@ io.on('connection', function (client) {
         io.emit("background color", color);
     });
 
-    client.on('admin-listclients', function() {
+    client.on('client-list', function() {
         client.emit("clients", clients);
     });
 
