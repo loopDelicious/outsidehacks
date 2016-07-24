@@ -6,6 +6,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/app.js"></script>
+    <link rel="stylesheet" href="/reset.css"/>
     <link rel="stylesheet" href="/index.css"/>
 
 </head>
@@ -33,11 +34,13 @@
         </table>
     </div>
 
-    <form id='get-clients'>
-        <button id='clients'>Get Clients</button>
-        <h1>Client List</h1>
-        <pre id="client-list"></pre>
-    </form>
+    <div>
+        <form id='get-clients'>
+            <button id='clients'>Get Clients</button>
+            <h1>Client List</h1>
+            <pre id="client-list"></pre>
+        </form>
+    </div>
 
     <form id='refresh-form'>
         <button id='refresh'>Refresh</button>
