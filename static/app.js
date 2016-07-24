@@ -6,8 +6,8 @@ var OL = {
         // update connection msg and start location loop
         this.socket.on('connect', function(){
             $('#connect-msg').text('Connected!');
-            OL.updateLocation();
-        });
+            this.updateLocation();
+        }.bind(this));
 
         // listen for bg color events
         this.socket.on('background color', function (color) {
