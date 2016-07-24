@@ -37,7 +37,7 @@ var OL = {
             this.colorTimeout = window.setTimeout(function(){
                 this.bgcolor = data.color;
                 this.$body.css({backgroundColor: this.bgcolor});
-            }.bind(this), data.distance * 100);
+            }.bind(this), (10 - this.speed) * data.distance * 100);
 
             if (window.isAdmin) {
                 this.$body.css({backgroundColor: this.bgcolor});
@@ -76,8 +76,8 @@ var OL = {
                 return;
             }
 
-            $("#speed_slider").val(Math.ceil(speed*100));
-            $("#speed_val").text(Math.ceil(speed*100));
+            $("#speed_slider").val(speed);
+            $("#speed_val").text(speed);
         }.bind(this));
 
         this.socket.on('bpm', function(bpm) {
@@ -140,7 +140,7 @@ var OL = {
             $("#speed_slider").on("input", function(){
                 $("#speed_val").text(this.value);
                 //console.log('changing speed to ', this.value);
-                self.socket.emit('admin-speed', this.value / 100);
+                self.socket.emit('admin-speed', this.value);
             });
 
             $("#slider").on("input", function(){

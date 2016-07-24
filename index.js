@@ -11,6 +11,7 @@ var djCoords = {
     lat: 0,
     lng: 0
 };
+var speed = 0;
 
 app.use(express.static('static'));
 
@@ -52,29 +53,40 @@ io.on('connection', function (client) {
         io.emit('chat-message', msg);
     });
 
-    client.on('bpm', function(){
-        client.emit('bpm', bpm);
-    });
-
     client.on('background-color', function(){
         client.emit('background-color', {
             color: bgcolor
         });
     });
 
+    // opacity
     client.on('opacity', function(){
         client.emit('opacity', opacity);
     });
+    client.on('admin-opacity', function(newOpacity){
+        opacity = newOpacity;
+        io.emit('opacity', opacity);
+    });
 
+    //bpm
+    client.on('bpm', function(){
+        client.emit('bpm', bpm);
+    });
     client.on('admin-bpm', function(newBpm){
         bpm = newBpm;
         io.emit('bpm', bpm);
     });
 
-    client.on('admin-opacity', function(newOpacity){
-        opacity = newOpacity;
-        io.emit('opacity', opacity);
+    // propagation speed
+    client.on('speed', function(){
+        client.emit('speed', speed);
     });
+    client.on('admin-speed', function(newSpeed){
+        speed = newSpeed;
+        io.emit('speed', speed);
+    });
+
+
 
 
     // display logic:
