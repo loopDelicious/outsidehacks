@@ -10,42 +10,54 @@
 </head>
 
 <body>
-    <h1 id="connect-msg">Connecting...</h1>
+    <!--<div id="flash"></div>-->
 
-    <div id='color-picker' class="control-element">
-        <table>
-            <tr>
-                <td bgcolor="#aaff01">BrightGreen</td>
-                <td bgcolor="#ffaa01">Orange</td>
-                <td bgcolor="#ff00aa">Pink</td>
-            </tr>
-            <tr>
-                <td bgcolor="#aa00ff">Purple</td>
-                <td bgcolor="#00aaff">Blue</td>
-                <td bgcolor="black">Black</td>
-            </tr>
-        </table>
-    </div>
 
-    <div id="bpm" class="control-element">
-        <h1>BPM</h1>
-        <input id="slider_val" value="100"><br>
-        <input id="slider" type="range" min="60" max="200" step="5" />
-    </div>
+    <div id="content">
+        <h1 id="connect-msg">Connecting...</h1>
 
-    <div id="client-container">
-        <form id='get-clients'>
-            <button id='clients'>Get Clients</button>
-            <h1>Client List</h1>
-            <pre id="client-list"></pre>
+        <div id='color-picker' class="control-element">
+            <table>
+                <tr>
+                    <td bgcolor="#aaff01">BrightGreen</td>
+                    <td bgcolor="#ffaa01">Orange</td>
+                    <td bgcolor="#ff00aa">Pink</td>
+                </tr>
+                <tr>
+                    <td bgcolor="#aa00ff">Purple</td>
+                    <td bgcolor="#00aaff">Blue</td>
+                    <td bgcolor="black">Black</td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="bpm" class="control-element slider-control">
+            <h1>BPM</h1>
+            <input id="slider_val" value="100"><br>
+            <input id="slider" type="range" min="60" max="200" step="5" />
+        </div>
+
+        <div id="opacity" class="control-element slider-control">
+            <h1>Flash Depth</h1>
+            <div id="opacity_val">100</div><br/>
+            <input id="opacity_slider" type="range" min="0" max="100" step="5" />
+        </div>
+
+        <div id="client-container">
+            <form id='get-clients'>
+                <button id='clients'>Get Clients</button>
+                <h1>Client List</h1>
+                <pre id="client-list"></pre>
+            </form>
+        </div>
+
+        <form id='refresh-form'>
+            <button id='refresh'>Refresh</button>
         </form>
+
+        <div class="people"></div>
+
     </div>
-
-    <form id='refresh-form'>
-        <button id='refresh'>Refresh</button>
-    </form>
-
-    <div class="people"></div>
 
     <script>
         isAdmin = true;

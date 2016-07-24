@@ -4,8 +4,18 @@ html, body {
     font-family: Helvetica, Arial, sans-serif;
 }
 
-body {
-    /*transition: 500ms background-color;*/
+#flash {
+    padding: 20px;
+    height: 100%;
+    width: 100%;
+    background: black;
+    position: absolute;
+}
+#content {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    color: white;
     padding: 20px;
 }
 
@@ -23,7 +33,7 @@ body {
 
 #color-picker td {
     height: 100px;
-    width: 100px;
+    width: 115px;
     font-size: 12px;
     color: #333;
     text-shadow: 1px 1px rgba(255, 255, 255, 0.5);
@@ -41,14 +51,8 @@ body {
     margin-top: 20px;
 }
 
-#bpm {
-    padding: 20px;
-    float: left;
-    margin-left: 20px;
-    text-align: center;
-}
-
-#bpm #slider_val {
+#bpm #slider_val,
+#opacity #opacity_val{
     width: 100px;
     padding:12px;
     margin-bottom:25px;
@@ -58,13 +62,15 @@ body {
     text-align: center;
     font-size:30px;
     font-weight:bold;
+    display: inline-block;
 }
 
-#bpm #slider {
+#bpm #slider,
+#opacity #opacity_slider{
     width: 300px
 }
 
-#bpm h1 {
+.slider-control h1 {
     font-weight:bold;
     font-size:30px;
     margin-bottom:20px;
@@ -73,7 +79,14 @@ body {
 .control-element {
     background: rgba(100,100,100,0.5);
     border: 20px solid rgba(0, 0, 0, 0.3);
-    border-radius: 15px
+    border-radius: 15px;
+    margin: 0 20px 20px 0;
+}
+
+.slider-control {
+    padding: 20px;
+    float: left;
+    text-align: center;
 }
 
 @keyframes example {
