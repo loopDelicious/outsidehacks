@@ -1,3 +1,9 @@
+var $ = require ('jquery');
+var io = require ('socket.io-client');
+var React = require ('react');
+var ReactDOM = require ('react-dom');
+var People = require('./people.jsx');
+
 // set up main OutsideLights js object
 var OL = {
     init: function(){
@@ -7,6 +13,11 @@ var OL = {
         this.socket.on('connect', function(){
             $('#connect-msg').hide();
             this.updateLocation();
+
+            var peopleProps = {
+                socket: this.socket
+            };
+            ReactDOM.render(<People {...peopleProps} />, $('.people')[0]);
         }.bind(this));
 
         // listen for background color events
@@ -22,7 +33,7 @@ var OL = {
         // listen for refresh request
         this.socket.on('refresh', function() {
             window.location.reload();
-        });
+        })
 
         // set up admin functions
         $(document).ready(function () {
@@ -57,7 +68,8 @@ var OL = {
         }, {
             enableHighAccuracy: true
         });
-    },
+    }
 };
 
 OL.init();
+

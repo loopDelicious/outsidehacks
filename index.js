@@ -9,7 +9,11 @@ var clients = {}; //
 app.use(express.static('static'));
 
 app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/index.html');
+    res.sendFile(__dirname + '/client.html');
+});
+
+app.get('/admin', function (req, res) {
+    res.sendFile(__dirname + '/admin.html');
 });
 
 io.on('connection', function (client) {
