@@ -2,9 +2,8 @@ var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
-var clients = {}; // 
-//socket id: [location, color, last message / pic
-//find id on location update
+var geolib = require('geolib');
+var clients = {}; //
 
 app.use(express.static('static'));
 
@@ -31,10 +30,33 @@ io.on('connection', function (client) {
             }
         // }
     });
-    // display logic:
 
+
+
+    // display logic:
     client.on('admin-color', function (color) {
-        io.emit("background color", color);
+        if (!clients[client.id]) {
+            return;
+        }
+        var artist = clients[client.id].coords;
+        // io.emit("background color", color);
+        // calculate location
+        var distance;
+        for (var key in clients) {
+            if (!clients.hasOwnProperty(key)) continue;
+            if (!io.sockets.connected[key]) {
+                delete clients[key];
+                continue;
+            }
+
+            distance = geolib.getDistance(
+                {latitude: clients[key].coords.lat, longitude: clients[key].coords.lng},
+                {latitude: artist.lat, longitude: artist.lng}
+            );
+            // emit to a specific client id
+
+            io.sockets.connected[key].emit('background color', color);
+        }
     });
 
     client.on('client-list', function() {
