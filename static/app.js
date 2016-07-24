@@ -5,7 +5,7 @@ var OL = {
 
         // update connection msg and start location loop
         this.socket.on('connect', function(){
-            $('#connect-msg').text('Connected!');
+            $('#connect-msg').hide();
             this.updateLocation();
         }.bind(this));
 
@@ -22,7 +22,7 @@ var OL = {
         // listen for refresh request
         this.socket.on('refresh', function() {
             window.location.reload();
-        })
+        });
 
         // set up admin functions
         $(document).ready(function () {
