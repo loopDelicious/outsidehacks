@@ -7,6 +7,10 @@ var clients = {}; //
 var bpm = 100;
 var opacity = 1;
 var bgcolor = 'black';
+var djCoords = {
+    lat: 0,
+    lng: 0
+};
 
 app.use(express.static('static'));
 
@@ -28,14 +32,17 @@ io.on('connection', function (client) {
     client.on('location-update', function(latlng){
         // if user in clients, push location
         // otherwise create new client and push location
-        // if (typeof(clients[client.id]) == "object") {
-        //     client[client.id].coords = latlng;
-        // } else {
-            clients[client.id] = {
-                'coords': latlng,
-                'first_appeared': Date.now(),
-            };
-        // }
+
+        clients[client.id] = {
+            'coords': latlng
+        };
+
+        distance = geolib.getDistance(
+            {latitude: latlng.lat, longitude: latlng.lng},
+            {latitude: djCoords.lat, longitude: djCoords.lng}
+        );
+
+        client.emit('distance-update', distance);
     });
 
 
@@ -77,7 +84,7 @@ io.on('connection', function (client) {
         if (!clients[client.id]) {
             return;
         }
-        var artist = clients[client.id].coords;
+        djCoords = clients[client.id].coords;
         // io.emit("background color", color);
         // calculate location
         var distance;
@@ -90,7 +97,7 @@ io.on('connection', function (client) {
 
             distance = geolib.getDistance(
                 {latitude: clients[key].coords.lat, longitude: clients[key].coords.lng},
-                {latitude: artist.lat, longitude: artist.lng}
+                {latitude: djCoords.lat, longitude: djCoords.lng}
             );
             // emit to a specific client id
 
