@@ -36,6 +36,10 @@ io.on('connection', function (client) {
         // }
     });
 
+    client.on('chat-message', function(msg) {
+        console.log('message: ' + msg);
+    });
+
     client.on('bpm', function(){
         client.emit('bpm', bpm);
     });
@@ -84,8 +88,6 @@ io.on('connection', function (client) {
     });
 
 });
-
-
 
 
 http.listen(3000, function () {
