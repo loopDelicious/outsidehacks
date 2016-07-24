@@ -80,12 +80,18 @@
 	        // listen for background-color events
 	        this.socket.on('background-color', function (data) {
 	            $('#distance').text(data.distance);
-	            this.bgcolor = data.color;
-	            this.$body.css({ backgroundColor: this.bgcolor });
+	            window.setTimeout(function () {
+	                this.bgcolor = data.color;
+	                this.$body.css({ backgroundColor: this.bgcolor });
+	            }.bind(this), data.distance * 100);
 	            if (window.isAdmin) {
 	                this.$body.css({ backgroundColor: this.bgcolor });
 	            }
 	        }.bind(this));
+	
+	        this.socket.on('distance-update', function (distance) {
+	            $('#distance').text(distance);
+	        });
 	
 	        // listen client-list events
 	        this.socket.on('clients', function (clientList) {
