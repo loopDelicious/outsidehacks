@@ -19,6 +19,11 @@ var OL = {
             $('#client-list').text(JSON.stringify(clientList, null, 4));
         });
 
+        // listen for refresh request
+        this.socket.on('refresh', function() {
+            window.location.reload();
+        })
+
         // set up admin functions
         $(document).ready(function () {
             $('#admin').on("submit", function (e) {
@@ -30,7 +35,10 @@ var OL = {
                 e.preventDefault();
                 this.socket.emit('client-list');
             }.bind(this));
-
+            $('#refresh-form').on("submit", function(e) {
+                e.preventDefault();
+                this.socket.emit('refresh');
+            }.bind(this));
         }.bind(this));
     },
 

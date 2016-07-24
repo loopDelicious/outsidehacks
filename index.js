@@ -41,6 +41,10 @@ io.on('connection', function (client) {
         client.emit("clients", clients);
     });
 
+    client.on('refresh', function() {
+        io.emit("refresh");
+    });
+
 });
 
 
