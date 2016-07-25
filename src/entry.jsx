@@ -51,8 +51,9 @@ var OL = {
         //adjust for user latency upon distance update
         this.socket.on('distance-update', function (distance) {
             $('#distance').text(distance);
-            latency = Date.now() - startTime;
-            toDelay = latency / 2;
+            this.latency = Date.now() - this.startTime;
+            this.toDelay = this.latency / 2;
+            // this.socket.emit('toDelay', toDelay); // send to server
         });
 
                 // listen client-list events
@@ -196,7 +197,8 @@ var OL = {
         navigator.geolocation.getCurrentPosition(function (data) {
             this.coords = {
                 lat: data.coords.latitude,
-                lng: data.coords.latitude
+                lng: data.coords.latitude,
+                toDelay: this.toDelay,
             };
 
             this.socket.emit('location-update', this.coords);

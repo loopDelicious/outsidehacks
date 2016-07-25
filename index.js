@@ -41,7 +41,8 @@ io.on('connection', function (client) {
 
         clients[client.id] = {
             coords: latlng,
-            distance: distance
+            distance: distance,
+            toDelay: latlng.toDelay,
         };
 
         client.emit('distance-update', distance);
