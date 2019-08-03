@@ -1,4 +1,7 @@
 # Outside Lights:
+
+[![GitHub](https://img.shields.io/github/license/loopDelicious/outsidehacks)](/LICENSE)
+
 ## turn your phone into a synchronized light show
 Developed in 24 hours for the Outside Hacks hackathon, we set out to build something that enhances the experience for Artists and/or Fans at Outside Lands music festival. Using web sockets, DJ's can interact with the audience, pushing changes in background color and animations based on GPS location of the audience member's phone.
 
